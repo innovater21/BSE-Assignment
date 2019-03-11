@@ -55,7 +55,7 @@
 				var request = $.ajax(
 					{'url': '/getSearch',
 					'data':{
-							txt1: $("#searchBox").val()
+							txt1: $("#searchBox").val().toUpperCase()
 					}
 				});
 				request.done(

@@ -21,6 +21,7 @@ body{
 	border: 1px solid gray !important;
 	border-radius: 5px !important;
 	padding-left: 1%;
+	color: white;
 }
 .input-group{
 	margin-top: 5%;

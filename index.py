@@ -11,7 +11,7 @@ from bs4 import BeautifulSoup
 import requests
 import zipfile36
 import datetime
-
+from operator import itemgetter
 
 class demoExample:
 	def index(self):
@@ -29,24 +29,32 @@ class demoExample:
 		finalList=[]
 		prevList = []
 		tempList = []
-		# count = 0
+		xDict = {}
+		xpList=[]
 		prevList = redisObj.keys('*')
-		for i in range(0,10):
-			max1=0.0
-			for j in range(len(prevList)):
-				if(float(redisObj.hget(prevList[j],'HIGH').decode('utf-8'))>max1):
-					max1 = float(redisObj.hget(prevList[j],'HIGH').decode('utf-8'))
-					maxValue = prevList[j]
-			prevList.remove(maxValue)
-			finalList.append(maxValue)
-		for item in finalList:
-			y={}
-			y["NAME"] = item.decode('utf-8')
-			y["CODE"] = redisObj.hget(item,'SC_CODE').decode('utf-8')
-			y["OPEN"] = redisObj.hget(item,'OPEN').decode('utf-8')
-			y["HIGH"] = redisObj.hget(item,'HIGH').decode('utf-8')
-			y["LOW"] = redisObj.hget(item,'LOW').decode('utf-8')
-			tempList.append(y)
+		for newItem in prevList:
+			xDict={}
+			xDict["HIGH"] = float(redisObj.hget(newItem,'HIGH').decode('utf-8'));
+			xDict["Name"]  = newItem;
+			xpList.append(xDict)
+		xpList = sorted(xpList,key=itemgetter('HIGH'),reverse=True)
+		print(redisObj.hget(prevList[0],'HIGH').decode('utf-8'))
+		count=0
+		for item in xpList:
+			if(count>9):
+				break
+			else:
+				y={}
+				# print(item)
+				y["NAME"] = item['Name'].decode('utf-8')
+				y["CODE"] = redisObj.hget(item['Name'],'SC_CODE').decode('utf-8')
+				y["OPEN"] = redisObj.hget(item['Name'],'OPEN').decode('utf-8')
+				y["HIGH"] = redisObj.hget(item['Name'],'HIGH').decode('utf-8')
+				y["LOW"] = redisObj.hget(item['Name'],'LOW').decode('utf-8')
+				tempList.append(y)
+				# print(y)
+				count+=1
+		print(tempList)
 		return tempList
 	getTrends.exposed = True
 
@@ -56,7 +64,7 @@ class demoExample:
 		redisObj = redis.Redis(host='localhost', port=6379, db=0)
 		searchList = []
 		tempList=[]
-		searchList = redisObj.keys(txt1+"*")
+		searchList = redisObj.keys("*"+txt1+"*")
 		for item in searchList:
 			y={}
 			# print(item)
