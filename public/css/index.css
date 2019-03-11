@@ -1,0 +1,29 @@
+.jumbotron
+{
+	margin-left:20%;
+	margin-right:20%;
+	margin-top: 2%;
+	padding-top: 2% !important;
+	opacity: 0.8;
+}
+body{
+	background-image: url("BSEImage.jpg");
+	font-family: 'Montserrat', sans-serif;
+	text-align: center;
+}
+#logo{
+	margin-right: auto;
+	margin-left: auto;
+	display: block;
+}
+.display-4{
+	text-align: center;
+	margin-bottom: 2%;
+}
+#buttonMain{
+	margin-top: 4%;
+}
+#buttonMain:hover{
+	background-color: #0089d1;
+	color: white;
+}

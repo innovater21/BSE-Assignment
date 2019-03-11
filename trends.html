@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TRENDS</title>
+	<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
+	<link rel="stylesheet" type="text/css" href="/static/css/util.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/main.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/trends.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+		<script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
+	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet"> 
+	<script type='text/javascript'>
+		$(document).ready(function()
+		{
+			
+				function trends(){
+				var request = $.ajax({
+					'url': '/getTrends'
+				});
+				request.done(
+					function(response) 
+					{
+						$("#searchBox").val('');
+						var jsonVal = Object.keys(response[0]);
+					    var html = "<table>";
+					    html+="<tr class='table100-head'>";
+					        html+="<th class='column1'>"+jsonVal[0]+"</th>";
+					        html+="<th class='column2'>"+jsonVal[1]+"</th>";
+					        html+="<th class='column3'>"+jsonVal[2]+"</th>";
+					        html+="<th class='column4'>"+jsonVal[3]+"</th>";
+					        html+="<th class='column5'>"+jsonVal[4]+"</th>";
+					        html+="</tr>";
+					        html+="<tr>";	
+					    for (var i = 0; i < response.length; i++) {	 
+					    	console.log(response[i]);       
+					        html+="<td class='column1'>"+response[i]["NAME"]+"</td>";
+					        html+="<td class='column2'>"+response[i]["CODE"]+"</td>";
+					        html+="<td class='column3'>"+response[i]["OPEN"]+"</td>";
+					        html+="<td class='column4'>"+response[i]["HIGH"]+"</td>";
+					        html+="<td class='column5'>"+response[i]["LOW"]+"</td>"; 
+					        html+="</tr>";
+					    }
+	   					 html+="</table>";
+					    $("#tableNew").html(html);
+					}
+				);
+			}
+			trends();
+			$('#getTrends').on('click', function() {
+				trends();
+			});
+			$('#getSearch').on('click', function()
+			{
+				var request = $.ajax(
+					{'url': '/getSearch',
+					'data':{
+							txt1: $("#searchBox").val()
+					}
+				});
+				request.done(
+					function(response) 
+					{
+						var jsonVal = Object.keys(response[0]);
+					    var html = "<table>";
+					    html+="<tr class='table100-head'>";
+					        html+="<th class='column1'>"+jsonVal[0]+"</th>";
+					        html+="<th class='column2'>"+jsonVal[1]+"</th>";
+					        html+="<th class='column3'>"+jsonVal[2]+"</th>";
+					        html+="<th class='column4'>"+jsonVal[3]+"</th>";
+					        html+="<th class='column5'>"+jsonVal[4]+"</th>";
+					        html+="</tr>";
+					        html+="<tr>";	
+					    for (var i = 0; i < response.length; i++) {	 
+					    	console.log(response[i]);       
+					        html+="<td class='column1'>"+response[i]["NAME"]+"</td>";
+					        html+="<td class='column2'>"+response[i]["CODE"]+"</td>";
+					        html+="<td class='column3'>"+response[i]["OPEN"]+"</td>";
+					        html+="<td class='column4'>"+response[i]["HIGH"]+"</td>";
+					        html+="<td class='column5'>"+response[i]["LOW"]+"</td>"; 
+					        html+="</tr>";
+					    }
+	   					 html+="</table>";
+					    $("#tableNew").html(html);
+					}
+				);
+
+			})
+		});
+	</script>
+</head>
+<body>
+	<div>
+		<div id="topDiv">
+			<h1 class="display-3">TOP 10 STOCKS</h1>
+			<div class="input-group mb-3">
+			  <!-- <div class="input-group-prepend">
+			    <span class="input-group-text" id="basic-addon1">@</span>
+			  </div> -->
+			  <input id = "searchBox" type="text" class="form-control" placeholder="ENTER STOCK NAME" aria-label="Username" aria-describedby="basic-addon1">
+			</div>
+			<div id="buttonGroup">
+				<button type="button" id="getTrends" class="btn btn-outline-primary">REFRESH</button>
+				<button type="button" id="getSearch" class="btn btn-outline-primary">SEARCH</button>
+			</div>
+		</div>
+		<div class="limiter">
+			<div class="container-table100">
+				<div class="wrap-table100">
+					<div id = "tableNew" class="table100">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

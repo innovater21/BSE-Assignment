@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
+		<link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" href="/static/css/index.css">
+		<script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
+		<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet"> 
+
+		<title>BSE TRENDS</title>
+	</head>
+	<body style="background-image: url(/static/images/BSEImage.jpg);">
+		<img id="logo" src="/static/images/BSElogo.png">
+		<div class="jumbotron">
+
+			<h1 class="display-4">BSE TRENDS</h1>
+			<p class="lead">This is a Simple WebApp, to track the trends from BSE stock market</p>
+			<hr class="my-4">
+			<p>It uses Equity BhavCopy for fetching the daily status of the stocks.</p>
+			<p class="lead">
+			<button type="button" id = "buttonMain" class="btn btn-outline-primary" onclick="loadUrl()">Check Trends</button>
+			</p>
+		</div>
+	</body>
+	<script type="text/javascript">
+		function loadUrl()
+		{
+			url = window.location.href;
+			url = url + 'trends';
+			window.location.href = url;
+		}
+
+	</script>
+</html> 
